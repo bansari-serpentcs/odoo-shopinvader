@@ -21,5 +21,5 @@
         'data/product_rating_data.xml',
         'security/ir.model.access.csv',
     ],
-    'installable': False,
+    'installable': True,
 }

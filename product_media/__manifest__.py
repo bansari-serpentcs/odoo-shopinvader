@@ -10,7 +10,7 @@
               "Serpent Consulting Services Pvt. Ltd.",
     'website': 'http://www.akretion.com',
     'license': 'AGPL-3',
-    'category': 'Uncategorized',
+    'category': 'Sales',
     'summary': 'Give the posibility to store media data on product',
     'depends': [
         'product',
@@ -21,5 +21,5 @@
         'data/ir_parameter.xml',
         'security/ir.model.access.csv',
     ],
-    'installable': False,
+    'installable': True,
 }

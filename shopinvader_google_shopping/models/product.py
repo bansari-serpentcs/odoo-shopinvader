@@ -7,6 +7,8 @@ from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
+    """Enhance the object to add feature."""
+
     _inherit = 'product.template'
 
     google_categ_id = fields.Many2one(

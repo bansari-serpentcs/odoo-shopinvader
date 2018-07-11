@@ -22,19 +22,22 @@ except (ImportError, IOError) as err:
 
 
 class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
+    """Enhance the object to add features."""
+
+    _inherit = 'shopinvader.backend'
 
     def _get_variant_domain(self, lang):
         return [
             ('backend_id', '=', self.id),
             ('lang_id', '=', lang.id),
-            ('record_id.ean13', '!=', False),
-            ]
+            ('record_id.barcode', '!=', False),
+        ]
 
     def _get_absolute_url(self, url):
         return "%s/%s" % (self.location, url)
 
     def _get_variant_price(self, variant):
+        # Bansari- No role_ids field found in shopinvader.backend object
         main_role = self.role_ids.filtered('default')
         res = variant._get_price(
             main_role.pricelist_id, main_role.fiscal_position_ids[0])
@@ -46,16 +49,18 @@ class LocomotiveBackend(models.Model):
         res = {
             'id': variant.default_code,
             'title': variant.name,
+            # Bansari - No description field found in shopinvader.variant
+            # object but it available in shopinvader.product object.
             'description': variant.description[0:5000],
             'link': self._get_absolute_url(
                 variant.url_key + '?ref=%s' % variant.default_code),
-            'image_link': images[0].url,
+            'image_link': images[0].image_url,
             'additional_image_link': ','.join([
-                image.url for image in images[1:]]),
+                image.image_url for image in images[1:]]),
             'price': self._get_variant_price(variant),
             'google_product_category': variant.google_categ_id.google_id,
             'brand': variant.product_brand_id.name,
-            'gtin': variant.record_id.ean13,
+            'gtin': variant.record_id.barcode,
             'condition': 'new',
             'shipping': ':::0',
         }
@@ -91,6 +96,7 @@ class LocomotiveBackend(models.Model):
         storage_path = self._get_storage_path(lang)
         storage = self.env['storage.backend'].browse(
             self._get_storage_backend_id())
+        # Bansari - No store attribute found in storage.backend object
         storage.store(storage_path, datas, is_public=True)
 
     @api.multi

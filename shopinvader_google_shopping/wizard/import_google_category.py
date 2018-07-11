@@ -11,6 +11,8 @@ GOOGLE_CATEG_URL =\
 
 
 class ImportGoogleCategory(models.TransientModel):
+    """Add the class to import google category language wise"""
+
     _name = 'import.google.category'
     _description = 'Import Google Category'
 
@@ -21,6 +23,7 @@ class ImportGoogleCategory(models.TransientModel):
 
     @api.multi
     def run(self):
+        """To create/write google category according to language."""
         self.ensure_one()
         categ_obj = self.env['google.category'].with_context(
             lang=self.lang_id.code)
@@ -28,13 +31,15 @@ class ImportGoogleCategory(models.TransientModel):
         res = urllib.urlopen(GOOGLE_CATEG_URL % code).read().splitlines()
         res.pop(0)
         for line in res:
-            google_id, name = line.split(' - ', 1)
-            google_id = int(google_id)
-            categ = categ_obj.search([('google_id', '=', google_id)])
-            if categ:
-                categ.write({'name': name})
-            else:
-                categ_obj.create({
-                    'name': name,
-                    'google_id': google_id,
+            split_value = line.split(' - ', 1)
+            if len(split_value) > 1:
+                google_id, name = line.split(' - ', 1)
+                google_id = int(google_id)
+                categ = categ_obj.search([('google_id', '=', google_id)])
+                if categ:
+                    categ.write({'name': name})
+                else:
+                    categ_obj.create({
+                        'name': name,
+                        'google_id': google_id,
                     })

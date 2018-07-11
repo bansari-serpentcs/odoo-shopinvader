@@ -7,6 +7,8 @@ from odoo import fields, models
 
 
 class GoogleCategory(models.Model):
+    """Add new object to add google category."""
+
     _name = 'google.category'
     _description = 'Google Category'
     _order = 'google_id'
@@ -17,4 +19,4 @@ class GoogleCategory(models.Model):
     _sql_constraints = [
         ('record_uniq', 'unique(google_id)',
          'Google category id must be uniq.')
-        ]
+    ]

@@ -3,6 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from . import product
-from . import google_category
 from . import backend
+from . import google_category
+from . import product

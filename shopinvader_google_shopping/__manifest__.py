@@ -13,7 +13,7 @@
     'category': 'E-commerce',
     'summary': 'Export your product in google shopping',
     'depends': [
-        'shopinvader',
+        'shopinvader', 'storage_backend',
     ],
     'data': [
         'views/google_category_view.xml',

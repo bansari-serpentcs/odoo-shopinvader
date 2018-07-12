@@ -41,13 +41,13 @@ class LeadService(ShopinvaderService):
             'mobile': {'type': 'string', 'nullable': True},
             'state_id': {'coerce': to_int, 'nullable': True},
             'country_id': {'coerce': to_int, 'required': True},
-            }
+        }
 
         if 'crm_lead_firstname' in self.env.registry._init_modules:
             res.update({
                 'contact_firstname': {'type': 'string', 'required': True},
                 'contact_lastname': {'type': 'string', 'required': True},
-                })
+            })
         else:
             res['contact_name'] = {'type': 'string', 'required': True}
         return res

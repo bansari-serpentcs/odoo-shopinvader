@@ -7,8 +7,10 @@ from odoo import fields, models
 
 
 class CrmLead(models.Model):
+    """Enhance the object to add features."""
+
     _inherit = 'crm.lead'
 
     shopinvader_backend_id = fields.Many2one(
-        'locomotive.backend',
+        'shopinvader.backend',
         'Shopinvader Backend')

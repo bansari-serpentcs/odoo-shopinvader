@@ -26,12 +26,12 @@ class LeadCase(CommonCase):
             'description': 'Help, on ne supporte plus magento',
             'country_id': self.env.ref('base.fr').id,
             'mobile': '0600000000',
-            }
+        }
         check_data = data.copy()
         check_data.update({
             'partner_name': check_data.pop('company'),
             'email_from': check_data.pop('email'),
-            })
+        })
 
         self.service.create(data)
         lead = self.env['crm.lead'].search([], order='id desc', limit=1)[0]

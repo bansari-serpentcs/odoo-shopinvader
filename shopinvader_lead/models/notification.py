@@ -8,6 +8,8 @@ from odoo.tools.translate import _
 
 
 class ShopinvaderNotification(models.Model):
+    """Enhance the object to add feature."""
+
     _inherit = 'shopinvader.notification'
 
     def _get_all_notification(self):
@@ -15,5 +17,5 @@ class ShopinvaderNotification(models.Model):
         res['lead_confirmation'] = {
             'name': _('Lead Confirmation'),
             'model': 'crm.lead',
-            }
+        }
         return res

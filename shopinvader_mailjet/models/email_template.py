@@ -7,6 +7,8 @@ from odoo import fields, models
 
 
 class EmailTemplate(models.Model):
-    _inherit = 'email.template'
+    """Enhance the object to add feature."""
+
+    _inherit = 'mail.template'
 
     external_template_key = fields.Char()

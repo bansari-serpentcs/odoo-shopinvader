@@ -3,21 +3,22 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import json
+import urllib
+
 from odoo import models
-from odoo.addons.connector.session import ConnectorSession
+from odoo.addons.connector.connector import ConnectorEnvironment
 from odoo.addons.connector_locomotivecms.connector import get_environment
 from odoo.addons.shopinvader.services.sale import SaleService
 from odoo.addons.shopinvader_claim.services.claim import ClaimService
 from odoo.addons.shopinvader.services.address import AddressService
-import json
-import urllib
 
 
 class ShopinvaderNotification(models.Model):
     _inherit = 'shopinvader.notification'
 
     def _get_service(self, record, service_class):
-        session = ConnectorSession.from_env(self.env)
+        session = ConnectorEnvironment.env(self.env)
         env = get_environment(session, record._name, self.backend_id.id)
         service = env.backend.get_class(service_class, session, record._name)
         return service(env, None, {})
@@ -38,8 +39,8 @@ class ShopinvaderNotification(models.Model):
                     'url_anonymous': urllib.urlencode({
                         'token': sale['anonymous_token'],
                         'email': sale['anonymous_email'],
-                        })
                     })
+                })
             else:
                 sale['is_anonymous'] = 0
             data = {'sale': sale}

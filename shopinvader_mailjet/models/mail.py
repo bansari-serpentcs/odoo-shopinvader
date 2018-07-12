@@ -16,6 +16,8 @@ except ImportError, err:
 
 
 class MailMail(models.Model):
+    """Enhance the object to add features."""
+
     _inherit = 'mail.mail'
 
     data = fields.Text('Data')
@@ -28,20 +30,20 @@ class MailMail(models.Model):
             'MJ-TemplateID': self.external_template_key,
             'MJ-TemplateLanguage': True,
             'Subject': self.subject,
-            'Recipients': [
+            'Recipients': self.email_to and [
                 {'Email': email}
-                for email in self.email_to.split(',')
-                ],
+                for email in self.email_to.split(',')],
             'Vars': {'store': data, 'message': self.body},
             'Attachments': [{
                 'Content-type': att.file_type,
                 'Filename': att.name,
                 'content': att.datas,
-                } for att in self.attachment_ids],
-            }
+            } for att in self.attachment_ids],
+        }
 
     @api.multi
     def send_with_mailjet(self, auto_commit=False, raise_exception=False):
+        """The method used to sent mail id server type is mailjet."""
         self.ensure_one()
         auth = (self.mail_server_id.smtp_user, self.mail_server_id.smtp_pass)
         client = Client(auth=auth, version='v3')
@@ -51,7 +53,7 @@ class MailMail(models.Model):
             self.write({
                 'state': 'sent',
                 'message_id': response.json()['Sent'][0]['MessageID'],
-                })
+            })
         else:
             _logger.exception(
                 'mailjet failed sending mail.mail %s', self.id)
@@ -72,6 +74,7 @@ class MailMail(models.Model):
 
     @api.multi
     def send(self, auto_commit=False, raise_exception=False):
+        """Override the method to send mail according to server type."""
         for record in self:
             if record.mail_server_id.server_type == 'mailjet':
                 record.send_with_mailjet(

@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from . import email_template
 from . import mail
 from . import mail_server
-from . import email_template
-from . import notification
+# from . import notification

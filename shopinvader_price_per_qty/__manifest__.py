@@ -4,28 +4,19 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    "name": "Shopinvader price per quantity",
-    "summary": "Shopinvader price per quantity",
-    "version": "8.0.1.0.0",
-    "category": "e-commerce",
-    "website": "https://akretion.com",
-    "author": "Akretion",
-    "license": "AGPL-3",
-    "application": False,
-    'installable': False,
-    "auto_install": False,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
-    "depends": [
-        "shopinvader",
+    'name': 'Shopinvader price per quantity',
+    'version': '10.0.1.0.0',
+    'author': "Akretion,"
+               "Serpent Consulting Services Pvt. Ltd.",
+    'website': 'https://akretion.com',
+    'license': 'AGPL-3',
+    'category': 'e-commerce',
+    'summary': 'Shopinvader price per quantity',
+    'installable': True,
+    'depends': [
+        'shopinvader',
     ],
-    "data": [
-    ],
-    "demo": [
+    'demo': [
         'demo/pricelist_demo.xml',
     ],
-    "qweb": [
-    ]
 }
